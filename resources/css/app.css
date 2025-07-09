@@ -13,8 +13,8 @@
 }
 
 body{
-    background-image: url('../img/page_bg.jpg');
-    background-size: cover;
+    /* background-image: url('../img/page_bg.jpg');
+    background-size: cover; */
     font-family: var(--font-sans); /* Usa Montserrat ereditato dal tema */
 }
 

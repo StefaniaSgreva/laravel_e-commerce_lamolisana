@@ -1,4 +1,4 @@
-<header class="bg-white shadow-md sticky top-0 z-50" role="banner" aria-label="Intestazione del sito">
+<header class="bg-neutral-50 shadow-md sticky top-0 z-50" role="banner" aria-label="Intestazione del sito">
     <div class="container mx-auto px-4 py-4">
         <!-- Logo centrato -->
         <div id="logo" class="flex justify-center">

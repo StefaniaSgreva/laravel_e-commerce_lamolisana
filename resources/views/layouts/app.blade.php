@@ -39,7 +39,7 @@
     <meta property="og:image" content="{{ Vite::asset('resources/img/social-share.jpg') }}">
     <meta name="theme-color" content="#ffffff"> --}}
 </head>
-<body class="antialiased text-gray-900 min-h-screen">
+<body class="antialiased text-gray-900 bg-neutral-50 min-h-screen">
     {{-- HEADER --}}
     @include('partials.header')
     {{-- PAGE CONTENT --}}

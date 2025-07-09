@@ -1,4 +1,4 @@
-<footer role="contentinfo" aria-label="Piè di pagina" class="bg-gray-100 py-10 border-t border-gray-200">
+<footer role="contentinfo" aria-label="Piè di pagina" class="bg-neutral-50 py-10 border-t border-gray-200">
     <div class="container mx-auto px-4">
         <div class="flex flex-col items-center justify-between gap-4">
             <!-- Social Icons -->
