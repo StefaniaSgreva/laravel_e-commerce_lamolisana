@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -6,16 +8,23 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 body{
     background-image: url('../img/page_bg.jpg');
     background-size: cover;
-    font-family: sans-serif;
+    font-family: var(--font-sans); /* Usa Montserrat ereditato dal tema */
 }
 
 img{
     max-width: 100%;
 }
+
+/* footer{
+    background-image: url('../img/footer_bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+} */
