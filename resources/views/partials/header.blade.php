@@ -1,14 +1,14 @@
-<header class="bg-white shadow-md sticky top-0 z-50">
+<header class="bg-white shadow-md sticky top-0 z-50" role="banner" aria-label="Intestazione del sito">
     <div class="container mx-auto px-4 py-4">
         <!-- Logo centrato -->
         <div id="logo" class="flex justify-center">
             <img src="{{ Vite::asset('resources/img/logo.png') }}" alt="Logo" class="h-30">
         </div>
          <!-- Navbar -->
-        <nav class="flex justify-center mt-4">
+        <nav class="flex justify-center mt-4" role="navigation" aria-label="Menu principale">
             <ul class="flex  gap-6 items-center">
                 <li>
-                    <a href="{{ url('/')}}" class="font-medium transition duration-300 {{ Route::is('/') ? 'text-blue-600 underline' : 'text-gray-800 hover:text-blue-600' }}">
+                    <a href="{{ route('home') }}" class="font-medium transition duration-300 {{ Route::is('home') ? 'text-blue-600 underline' : 'text-gray-800 hover:text-blue-600' }}">
                         Home
                     </a>
                 </li>
