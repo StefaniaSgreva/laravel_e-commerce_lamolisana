@@ -7,7 +7,8 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/blog', function () {
-    return view('blog');
+    $posts = config('molisana.posts');
+    return view('blog', compact('posts'));
 })->name('blog');
 
 Route::get('/prodotti', function () {
