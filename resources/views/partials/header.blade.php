@@ -19,7 +19,7 @@
                 </li>
                 <li>
                     <a href="{{ route('blog') }}" class="font-medium transition duration-300 {{ Route::is('blog') ? 'text-blue-600 underline' : 'text-gray-800 hover:text-blue-600' }}">
-                        News
+                        Blog
                     </a>
                 </li>
             </ul>

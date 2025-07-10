@@ -12,19 +12,125 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-body{
-    /* background-image: url('../img/page_bg.jpg');
-    background-size: cover; */
-    font-family: var(--font-sans); /* Usa Montserrat ereditato dal tema */
+/* Configurazione tema personalizzato */
+@layer base{
+    :root{
+        /* Colori brand come variabili CSS */
+        --color-molisana-blue: 0, 45, 117; /* RGB format for rgba() */
+        --color-molisana-red: 178, 40, 47;
+        --color-molisana-dark-orange: 151, 60, 0;
+        --color-molisana-orange: 225, 113, 0;
+        --color-molisana-orange-hover: 187, 77, 0;
+
+        /* Transizioni */
+        --transition-default: all 0.3s ease-in-out;
+    }
+
+    *,
+    *::before,
+    *::after{
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+    scroll-behavior: smooth;
+    }
+
+    body{
+        /* font-family: var(--font-sans); */
+        font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+        @apply antialiased text-gray-900 bg-neutral-50;
+        line-height: 1.6;
+    }
+    /* Ottimizzazione immagini */
+    img {
+        @apply max-w-full h-auto block;
+    }
+    /* Previene distorsione */
+    img[width] {
+        @apply w-auto;
+    }
+    img[width][height] {
+        aspect-ratio: attr(width) / attr(height);
+    }
 }
 
-img{
-    max-width: 100%;
+/* Componenti personalizzati */
+@layer components {
+    /* Loader */
+    .page_loader {
+        @apply fixed inset-0 w-full h-full bg-white flex justify-center items-center z-[9999];
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+        will-change: opacity, visibility;
+        backdrop-filter: blur(2px);
+    }
+    .page_loader.hidden {
+        @apply opacity-0 invisible;
+    }
+
+    .loader {
+        @apply w-12 h-12 border-[5px] border-gray-100 rounded-full;
+        border-top-color: rgb(var(--color-molisana-blue)); /* Usa variabile CSS */
+        animation: spin 1s linear infinite;
+        will-change: transform;
+    }
+
+    /* Arrow Up */
+    .arrow_up {
+        @apply fixed bottom-8 right-8 w-12 h-12 rounded-full flex justify-center items-center cursor-pointer;
+        @apply opacity-0 invisible transition-all duration-300 ease-in-out z-[99];
+        background-color: rgba(var(--color-molisana-blue), 0.9);
+        color: white;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+        will-change: transform, opacity;
+    }
+
+    .arrow_up.visible {
+        @apply opacity-100 visible;
+    }
+
+    .arrow_up:hover {
+        @apply -translate-y-1;
+         background-color: rgba(var(--color-molisana-dark-orange), 1);
+    }
+
+    /* Icona freccia */
+    .arrow_up i {
+        @apply transition-transform duration-200 ease-in-out;
+    }
+
+    .arrow_up:hover i {
+        transform: translateY(-2px);
+    }
 }
 
-/* footer{
-    background-image: url('../img/footer_bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-} */
+/* Utility personalizzate */
+@layer utilities {
+  /* Animazione pulse personalizzata */
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Per elementi accessibili ma nascosti */
+  .visually-hidden {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  /* Animazione spin */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  /* Animazione pulse */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+}
+
+
+
+

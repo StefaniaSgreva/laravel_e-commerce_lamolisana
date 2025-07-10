@@ -6,7 +6,7 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/news', function () {
+Route::get('/blog', function () {
     return view('blog');
 })->name('blog');
 

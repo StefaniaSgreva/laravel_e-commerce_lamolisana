@@ -40,6 +40,10 @@
     <meta name="theme-color" content="#ffffff"> --}}
 </head>
 <body class="antialiased text-gray-900 bg-neutral-50 min-h-screen">
+    {{-- PAGE LOADER --}}
+    <div class="page_loader">
+        <div class="loader"></div>
+    </div>
     {{-- HEADER --}}
     @include('partials.header')
     {{-- PAGE CONTENT --}}
@@ -48,5 +52,9 @@
     </main>
     {{-- FOOTER --}}
     @include('partials.footer')
+    {{-- PAGE ARROW UP--}}
+    <div class="arrow_up" aria-label="Torna su">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 </body>
 </html>
