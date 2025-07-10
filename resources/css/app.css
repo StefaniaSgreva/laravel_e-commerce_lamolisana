@@ -123,6 +123,7 @@
 
     .bg-molisana-orange { background-color: #e17100; }
     .text-molisana-orange { color: #e17100; }
+    .border-molisana-orange { border-color: #e17100; }
 
     .bg-molisana-orange-hover { background-color: #bb4d00; }
     .hover\:bg-molisana-orange-hover:hover { background-color: #bb4d00; }

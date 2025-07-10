@@ -146,33 +146,33 @@ return [
     ],
     'posts' => [
         [
-            'title' => 'learn php',
-            'body' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, quos.',
+            'title' => '“Race for the cure”, La Molisana a Bari',
+            'body' => 'La prevenzione e la salute femminile al centro della XIX edizione di “Race for the cure” che aprirà i battenti domani a Bari in Piazza Prefettura, organizzata da Komen Italia, sotto l’Alto patronato della Repubblica.',
             'img' => 'https://picsum.photos/400/200'
         ],
         [
-            'title' => 'learn js',
-            'body' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, quos.',
+            'title' => 'TuttoFood, 5 maggio Milano',
+            'body' => 'Sarà inaugurata lunedì prossimo, 5 maggio a Milano Tuttofood, la fiera internazionale dell’agro-alimentare, piattaforma di tendenze innovative ed emergenti del comparto food & beverage.',
             'img' => 'https://picsum.photos/400/200'
         ],
         [
-            'title' => 'learn laravel',
-            'body' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, quos.',
+            'title' => 'L’amore in musica passa per Rigacuore',
+            'body' => 'Siamo lieti di annunciare l’inizio della nostra collaborazione con Csaba dalla Zorza, l’autrice italiana che ha fatto della buona tavola e delle buone maniere uno stile che oggi è fonte di ispirazione per moltissime persone.',
             'img' => 'https://picsum.photos/400/200'
         ],
         [
-            'title' => 'learn php',
-            'body' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, quos.',
+            'title' => 'Cosa Mangiare in Primavera',
+            'body' => 'La bella stagione primaverile porta con sé prodotti versatili che possiamo utilizzare in tanti modi, attingendo alla nostra creatività in cucina.',
             'img' => 'https://picsum.photos/400/200'
         ],
         [
-            'title' => 'learn js',
-            'body' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, quos.',
+            'title' => 'Tavola Primaverile: consigli per la tavola',
+            'body' => 'Con l’arrivo della primavera anche la tavola si rinnova, lasciandosi ispirare dai colori delicati e al contempo luminosi di questa stagione.',
             'img' => 'https://picsum.photos/400/200'
         ],
         [
-            'title' => 'learn laravel',
-            'body' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, quos.',
+            'title' => 'Tutto sulla Pasta Proteica',
+            'body' => 'La pasta proteica è diventata un alimento sempre più popolare, soprattutto tra gli sportivi e gli atleti.',
             'img' => 'https://picsum.photos/400/200'
         ],
 
