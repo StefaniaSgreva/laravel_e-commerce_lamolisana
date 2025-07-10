@@ -76,6 +76,11 @@
         animation: spin 1s linear infinite;
         will-change: transform;
     }
+    /* Classe per testo accessibile ma nascosto visivamente */
+    .sr-only {
+        @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+        clip: rect(0, 0, 0, 0);
+    }
 
     /* Arrow Up */
     .arrow_up {
@@ -108,27 +113,42 @@
 
 /* Utility personalizzate */
 @layer utilities {
-  /* Animazione pulse personalizzata */
-  .animate-pulse-slow {
-    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
+    /* Colori come classi custom */
+    .bg-molisana-blue { background-color: #002d75; }
+    .text-molisana-blue { color: #002d75; }
+    .border-molisana-blue { border-color: #002d75; }
 
-  /* Per elementi accessibili ma nascosti */
-  .visually-hidden {
-    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
-    clip: rect(0, 0, 0, 0);
-  }
+    .bg-molisana-dark-orange { background-color: #973c00; }
+    .text-molisana-dark-orange { color: #973c00; }
 
-  /* Animazione spin */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  /* Animazione pulse */
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
+    .bg-molisana-orange { background-color: #e17100; }
+    .text-molisana-orange { color: #e17100; }
+
+    .bg-molisana-orange-hover { background-color: #bb4d00; }
+    .hover\:bg-molisana-orange-hover:hover { background-color: #bb4d00; }
+
+    /* Animazione pulse personalizzata */
+    .animate-pulse-slow {
+        animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    /* Per elementi accessibili ma nascosti */
+    .visually-hidden {
+        @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+        clip: rect(0, 0, 0, 0);
+    }
+
+    /* Animazione spin */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Animazione pulse */
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
 }
 
 

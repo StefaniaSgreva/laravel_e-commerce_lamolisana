@@ -41,8 +41,9 @@
 </head>
 <body class="antialiased text-gray-900 bg-neutral-50 min-h-screen">
     {{-- PAGE LOADER --}}
-    <div class="page_loader">
-        <div class="loader"></div>
+    <div class="page_loader" role="status" aria-live="polite">
+        <div class="loader" aria-hidden="true"></div>
+        <span class="sr-only">Caricamento in corso...</span>
     </div>
     {{-- HEADER --}}
     @include('partials.header')

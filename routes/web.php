@@ -11,5 +11,7 @@ Route::get('/blog', function () {
 })->name('blog');
 
 Route::get('/prodotti', function () {
-    return view('products');
+    $products = config('molisana.pasta');
+    // dd(compact('products'));
+    return view('products', compact('products'));
 })->name('products');
