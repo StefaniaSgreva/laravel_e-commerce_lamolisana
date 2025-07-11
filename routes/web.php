@@ -20,12 +20,12 @@ Route::get('/blog', function () {
 // Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 
 
-Route::get('/prodotti', function () {
-    $products = config('molisana.pasta');
-    // dd(compact('products'));
-    return view('pages.products', compact('products'));
-})->name('products');
-// Route::get('/prodotti', [ProductsController::class, 'index'])->name('products');
+// Route::get('/prodotti', function () {
+//     $products = config('molisana.pasta');
+//     // dd(compact('products'));
+//     return view('pages.products', compact('products'));
+// })->name('products');
+Route::get('/prodotti', [ProductsController::class, 'index'])->name('products');
 
 Route::get('/contatti', [ContactsController::class, 'index'])->name('contacts');
 
