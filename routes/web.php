@@ -2,29 +2,31 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('pages.home');
-})->name('home');
+use App\Http\Controllers\HomeController as HomeController;
+use App\Http\Controllers\AboutController as AboutController;
+use App\Http\Controllers\ProductsController as ProductsController;
+use App\Http\Controllers\BlogController as BlogController;
+use App\Http\Controllers\ContactsController as ContactsController;
+use App\Http\Controllers\CartController as CartController;
 
-Route::get('/chi-siamo', function () {
-    return view('pages.about');
-})->name('about');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/chi-siamo', [AboutController::class, 'index'])->name('about');
 
 Route::get('/blog', function () {
     $posts = config('molisana.posts');
     return view('pages.blog', compact('posts'));
 })->name('blog');
+// Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+
 
 Route::get('/prodotti', function () {
     $products = config('molisana.pasta');
     // dd(compact('products'));
     return view('pages.products', compact('products'));
 })->name('products');
+// Route::get('/prodotti', [ProductsController::class, 'index'])->name('products');
 
-Route::get('/contatti', function () {
-    return view('pages.contacts');
-})->name('contacts');
+Route::get('/contatti', [ContactsController::class, 'index'])->name('contacts');
 
-Route::get('/carrello', function () {
-    return view('pages.cart');
-})->name('cart');
+Route::get('/carrello', [CartController::class, 'index'])->name('cart');

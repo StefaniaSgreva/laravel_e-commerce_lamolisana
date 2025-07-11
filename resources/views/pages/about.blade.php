@@ -91,9 +91,11 @@
                     ['name' => 'Anna Neri', 'role' => 'Responsabile Commerciale', 'img' => 'user_f_1.jpg']
                 ] as $member)
                 <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-                    <img src="{{ Vite::asset('resources/img/team/' . $member['img']) }}"
-                         alt="{{ $member['name'] }}"
-                         class="w-full h-64 object-cover">
+                    <div class="w-full h-84 overflow-hidden">
+                        <img src="{{ Vite::asset('resources/img/team/' . $member['img']) }}"
+                            alt="{{ $member['name'] }}"
+                            class="object-fit-cover ob">
+                        </div>
                     <div class="p-4">
                         <h3 class="text-xl font-bold text-molisana-blue">{{ $member['name'] }}</h3>
                         <p class="text-molisana-dark-orange font-medium">{{ $member['role'] }}</p>
