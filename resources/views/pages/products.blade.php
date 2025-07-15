@@ -83,7 +83,7 @@
 
     <!-- Paginazione -->
     <div class="containe mx-auto px-6 py-12">
-        {{ $products->links() }}
+        {{ $products->links('components.pagination') }}
     </div>
 </div>
 @endsection
