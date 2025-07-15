@@ -109,6 +109,50 @@
     .arrow_up:hover i {
         transform: translateY(-2px);
     }
+
+    /* Animazione principale */
+    #main-header {
+        transition: height 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+        height: 180px; /* Altezza estesa */
+        will-change: height;
+    }
+
+    #main-header.shrink {
+        height: 80px; /* Altezza ridotta */
+    }
+
+    /* Logo container - Gestisce l'altezza */
+    #logo-container {
+        will-change: height;
+        height: 120px; /* Altezza logo+padding */
+    }
+
+    #main-header.shrink #logo-container {
+        height: 0;
+    }
+
+    /* Logo - Gestisce solo l'opacità */
+    #logo {
+        will-change: opacity;
+        opacity: 1;
+    }
+
+    #main-header.shrink #logo {
+        opacity: 0;
+    }
+
+    /* Navbar - Padding fluido */
+    nav {
+        will-change: padding;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    #main-header.shrink nav {
+        padding-top: 1.8rem;
+        padding-bottom: 0.5rem;
+    }
+
 }
 
 /* Utility personalizzate */

@@ -1,11 +1,23 @@
-<header class="bg-neutral-50 shadow-md sticky top-0 z-50" role="banner" aria-label="Intestazione del sito">
-    <div class="container mx-auto px-4 py-4">
-        <!-- Logo centrato -->
-        <div id="logo" class="flex justify-center">
-            <img src="{{ Vite::asset('resources/img/logo.png') }}" alt="Logo" class="h-30">
+<header class="bg-neutral-50 shadow-md sticky top-0 z-50"
+        role="banner"
+        aria-label="Intestazione del sito"
+        id="main-header">
+    <div class="container mx-auto px-4 relative overflow-hidden">
+        <!-- Logo con doppio strato di transizione -->
+        <div id="logo-container" class="transition-all duration-500 ease-[cubic-bezier(0.33,1,0.68,1)]">
+            <div id="logo" class="flex justify-center py-4 transition-opacity duration-300 ease-linear">
+                <img src="{{ Vite::asset('resources/img/logo.png') }}"
+                     alt="Logo"
+                     class="h-30"
+                     loading="eager"
+                     style="transform: translateZ(0)">
+            </div>
         </div>
-         <!-- Navbar -->
-        <nav class="flex justify-center mt-4" role="navigation" aria-label="Menu principale">
+
+        <!-- Navbar con padding animato -->
+        <nav class="flex justify-center pb-4 transition-all duration-500 ease-[cubic-bezier(0.33,1,0.68,1)]"
+             role="navigation"
+             aria-label="Menu principale">
             <ul class="flex  gap-6 items-center">
                 <li>
                     <a href="{{ route('home') }}" class="font-medium transition duration-300 {{ Route::is('home') ? 'text-blue-600 underline' : 'text-gray-800 hover:text-blue-600' }}">

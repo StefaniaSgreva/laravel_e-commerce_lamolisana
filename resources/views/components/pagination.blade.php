@@ -64,7 +64,7 @@
                                     {{ $page }}
                                 </span>
                             @else
-                                <a href="{{ $url }}" class="flex items-center justify-center w-10 h-10 rounded-full text-molisana-blue hover:bg-molisana-blue hover:text-white transition-colors">
+                                <a href="{{ $url }}" class="flex items-center justify-center w-10 h-10 rounded-full text-molisana-blue hover:bg-molisana-blue hover:text-molisana-orange transition-colors">
                                     {{ $page }}
                                 </a>
                             @endif
