@@ -21,7 +21,25 @@ class ProductsController extends Controller
     // Mostra i dettagli di un prodotto specifico
     public function show(Product $product)
     {
-        return view('pages.show_product', compact('product'));
+        // Calcola la percentuale di risparmio se in offerta
+        $savingPercentage = 0;
+        if ($product->in_offerta && $product->prezzo > 0) {
+            $savingPercentage = round((($product->prezzo - $product->prezzo_offerta) / $product->prezzo) * 100);
+        }
+
+        // Recupera prodotti correlati (stesso tipo, escludendo il prodotto corrente)
+        $relatedProducts = Product::disponibili()
+            ->tipo($product->tipo)
+            ->where('id', '!=', $product->id)
+            ->inRandomOrder()
+            ->limit(4)
+            ->get();
+
+        return view('pages.show_product', [
+            'product' => $product,
+            'relatedProducts' => $relatedProducts,
+            'savingPercentage' => $savingPercentage
+        ]);
     }
 
     //  Mostra i prodotti in offerta
