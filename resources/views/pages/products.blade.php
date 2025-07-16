@@ -51,12 +51,12 @@
                             @if($product->tempo_cottura)
                                 <p class="text-gray-600 text-center mb-4">
                                     <i class="fas fa-clock mr-2"></i>
-                                    Cottura: {{ $product->tempo_cottura }} min
+                                    Cottura: {{ $product->tempo_cottura }}
                                 </p>
                             @endif
 
                             <div class="flex justify-between items-center mt-4">
-                                <a href="#"
+                                <a href="{{route('singleproduct', [$product->id])}}"
                                 class="text-molisana-blue font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-molisana-orange focus:ring-offset-2 rounded">
                                     Scopri di più
                                     <span class="sr-only">: {{ $product->nome }}</span>
