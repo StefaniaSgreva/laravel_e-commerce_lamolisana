@@ -2,32 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+    /**
+     * Mostra l'elenco dei prodotti disponibili
+     * Ordinati per data di pubblicazione (dal più recente)
+     */
     public function index()
     {
-        // Query base: prodotti disponibili ordinati per nome
         $products = Product::disponibili()
-            ->orderBy('nome')
-            ->paginate(12);  // Paginazione con 12 prodotti per pagina
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
 
-        return view('pages.products', compact('products'));
+        return view('pages.products', [
+            'products' => $products,
+            'tipiPasta' => ['lunga', 'corta', 'speciale', 'gluten-free']
+        ]);
     }
 
-    // Mostra i dettagli di un prodotto specifico
+    /**
+     * Mostra i dettagli di un singolo prodotto
+     */
     public function show(Product $product)
     {
-        // Calcola la percentuale di risparmio se in offerta
-        $savingPercentage = 0;
-        if ($product->in_offerta && $product->prezzo > 0) {
-            $savingPercentage = round((($product->prezzo - $product->prezzo_offerta) / $product->prezzo) * 100);
-        }
+        // Verifica che il prodotto sia disponibile
+        abort_unless($product->disponibile, 404);
 
-        // Recupera prodotti correlati (stesso tipo, escludendo il prodotto corrente)
+        // Incrementa il contatore delle visualizzazioni
+        $product->increment('visualizzazioni');
+
+        // Recupera 4 prodotti correlati (stesso tipo, random)
         $relatedProducts = Product::disponibili()
             ->tipo($product->tipo)
             ->where('id', '!=', $product->id)
@@ -37,30 +44,7 @@ class ProductsController extends Controller
 
         return view('pages.show_product', [
             'product' => $product,
-            'relatedProducts' => $relatedProducts,
-            'savingPercentage' => $savingPercentage
+            'relatedProducts' => $relatedProducts
         ]);
-    }
-
-    //  Mostra i prodotti in offerta
-    public function offerte()
-    {
-        $products = Product::inOfferta()
-            ->disponibili()
-            ->orderBy('nome')
-            ->get();
-
-        return view('pages.products.offerte', compact('products'));
-    }
-
-    // Mostra i prodotti per tipo
-    public function perTipo($type)
-    {
-        $products = Product::tipo($type)
-            ->disponibili()
-            ->orderBy('nome')
-            ->get();
-
-        return view('pages.products.tipo', compact('products', 'type'));
     }
 }

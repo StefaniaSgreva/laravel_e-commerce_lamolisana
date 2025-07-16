@@ -14,31 +14,50 @@
         </div>
     </section>
 
-     <!-- Content Sections -->
+    <!-- Content Sections -->
     <div class="container mx-auto px-4 py-12">
         <!-- Cards - Products-->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             @forelse ($products as $product)
                 <article class="group bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <!-- Badges -->
+                    <div class="absolute top-4 left-4 flex flex-col space-y-2 z-10">
+                        @if($product->in_offerta)
+                            <span class="bg-molisana-orange text-white px-3 py-1 rounded-full text-sm font-bold">
+                                OFFERTA -{{ $product->sconto_percentuale }}%
+                            </span>
+                        @endif
+                        @if($product->novita)
+                            <span class="bg-molisana-green text-white px-3 py-1 rounded-full text-sm font-bold">
+                                NOVITÀ
+                            </span>
+                        @endif
+                    </div>
+
+                    <!-- Product Image -->
                     <figure class="relative pb-[100%] overflow-hidden">
                         <img
                             src="{{ Vite::asset('resources/img/products/' . $product->src_img) }}"
-                            alt="{{ $product->nome }} - Pasta La Molisana"
+                            alt="{{ $product->img_alt ?? $product->nome }}"
                             class="absolute h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                             loading="lazy"
                             width="400"
                             height="400"
                         >
-                        @if($product->in_offerta)
-                            <span class="absolute top-4 right-4 bg-molisana-blue text-white px-3 py-1 rounded-full text-sm font-bold">
-                                OFFERTA
-                            </span>
-                        @endif
                     </figure>
+
+                    <!-- Product Details -->
                     <div class="p-6 flex flex-col h-full">
                         <div>
-                            <h3 class="text-xl text-center font-bold text-molisana-dark-orange mb-2">{{ $product->nome }}</h3>
+                            <!-- Product Name and Type -->
+                            <h3 class="text-xl text-center font-bold text-molisana-dark-orange mb-2">
+                                {{ $product->nome }}
+                            </h3>
+                            <p class="text-center text-gray-500 text-sm mb-4">
+                                {{ $product->tipo_formattato }}
+                            </p>
 
+                            <!-- Price -->
                             <div class="text-center my-4">
                                 @if($product->in_offerta)
                                     <span class="text-gray-400 line-through mr-2">{{ $product->prezzo_formattato }}</span>
@@ -46,18 +65,30 @@
                                 @else
                                     <span class="text-xl font-bold text-molisana-blue">{{ $product->prezzo_formattato }}</span>
                                 @endif
+                                <span class="block text-sm text-gray-500 mt-1">{{ $product->peso_formattato }}</span>
                             </div>
 
-                            @if($product->tempo_cottura)
-                                <p class="text-gray-600 text-center mb-4">
-                                    <i class="fas fa-clock mr-2"></i>
-                                    Cottura: {{ $product->tempo_cottura }}
-                                </p>
-                            @endif
+                            <!-- Cooking Time and Rating -->
+                            <div class="flex justify-center space-x-6 mb-4">
+                                @if($product->tempo_cottura)
+                                    <div class="text-gray-600 text-center">
+                                        <i class="fas fa-clock mr-1"></i>
+                                        {{ $product->tempo_cottura_formattato }}
+                                    </div>
+                                @endif
+                                @if($product->valutazione)
+                                    <div class="text-yellow-400">
+                                        @for($i = 0; $i < 5; $i++)
+                                            <i class="fas {{ $i < $product->valutazione ? 'fa-star' : 'fa-star-o' }}"></i>
+                                        @endfor
+                                    </div>
+                                @endif
+                            </div>
 
+                            <!-- Actions -->
                             <div class="flex justify-between items-center mt-4">
-                                <a href="{{route('singleproduct', [$product->id])}}"
-                                class="text-molisana-blue font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-molisana-orange focus:ring-offset-2 rounded">
+                                <a href="{{ route('singleproduct', $product->slug) }}"
+                                   class="text-molisana-blue font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-molisana-orange focus:ring-offset-2 rounded">
                                     Scopri di più
                                     <span class="sr-only">: {{ $product->nome }}</span>
                                 </a>
@@ -82,7 +113,7 @@
     </div>
 
     <!-- Paginazione -->
-    <div class="containe mx-auto px-6 py-12">
+    <div class="container mx-auto px-6 py-12">
         {{ $products->links('components.pagination') }}
     </div>
 </div>

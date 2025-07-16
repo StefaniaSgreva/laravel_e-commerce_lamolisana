@@ -1,0 +1,347 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
+class ProductsTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $pastas = [
+            [
+                'nome' => 'Bucatini La Molisana',
+                'descrizione' => 'Bucatini di semola di grano duro trafilati al bronzo, perfetti per sughi corposi.',
+                'prezzo' => 3.50,
+                'prezzo_offerta' => 2.99,
+                'peso' => 500,
+                'tipo' => 'lunga',
+                'tempo_cottura' => 11,
+                'src_img' => 'bucatini.webp',
+                'img_alt' => 'Pasta Bucatini La Molisana',
+                'in_offerta' => true,
+                'novita' => false,
+                'valutazione' => 4,
+                'venduti' => 1250,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Calamarata La Molisana',
+                'descrizione' => 'Calamarata dal formato particolare che ricorda gli anelli di calamaro, ideale per sughi di pesce.',
+                'prezzo' => 4.20,
+                'prezzo_offerta' => null,
+                'peso' => 500,
+                'tipo' => 'corta',
+                'tempo_cottura' => 12,
+                'src_img' => 'calamarata.webp',
+                'img_alt' => 'Pasta Calamarata La Molisana',
+                'in_offerta' => false,
+                'novita' => true,
+                'valutazione' => 5,
+                'venduti' => 780,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Casarecce La Molisana',
+                'descrizione' => 'Casarecce dalla forma arrotolata che trattengono perfettamente i sughi.',
+                'prezzo' => 3.80,
+                'prezzo_offerta' => 3.20,
+                'peso' => 500,
+                'tipo' => 'corta',
+                'tempo_cottura' => 10,
+                'src_img' => 'casarecce.webp',
+                'img_alt' => 'Pasta Casarecce La Molisana',
+                'in_offerta' => true,
+                'novita' => false,
+                'valutazione' => 4,
+                'venduti' => 950,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Chitarra La Molisana',
+                'descrizione' => 'Spaghetti alla chitarra trafilati al bronzo, la tradizione abruzzese-molisana.',
+                'prezzo' => 4.50,
+                'prezzo_offerta' => null,
+                'peso' => 500,
+                'tipo' => 'lunga',
+                'tempo_cottura' => 9,
+                'src_img' => 'chitarra.webp',
+                'img_alt' => 'Pasta Chitarra La Molisana',
+                'in_offerta' => false,
+                'novita' => false,
+                'valutazione' => 5,
+                'venduti' => 1100,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Conchiglie La Molisana',
+                'descrizione' => 'Conchiglie perfette per sughi con pezzetti di verdura o carne.',
+                'prezzo' => 3.20,
+                'prezzo_offerta' => 2.80,
+                'peso' => 500,
+                'tipo' => 'corta',
+                'tempo_cottura' => 11,
+                'src_img' => 'conchiglie.webp',
+                'img_alt' => 'Pasta Conchiglie La Molisana',
+                'in_offerta' => true,
+                'novita' => false,
+                'valutazione' => 4,
+                'venduti' => 850,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Farfalle La Molisana',
+                'descrizione' => 'Farfalle dalla forma elegante, ideali per insalate di pasta e sughi leggeri.',
+                'prezzo' => 3.60,
+                'prezzo_offerta' => null,
+                'peso' => 500,
+                'tipo' => 'corta',
+                'tempo_cottura' => 10,
+                'src_img' => 'farfalle.webp',
+                'img_alt' => 'Pasta Farfalle La Molisana',
+                'in_offerta' => false,
+                'novita' => false,
+                'valutazione' => 3,
+                'venduti' => 720,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Fusilli La Molisana',
+                'descrizione' => 'Fusilli a spirale che trattengono alla perfezione ogni tipo di sugo.',
+                'prezzo' => 3.40,
+                'prezzo_offerta' => null,
+                'peso' => 500,
+                'tipo' => 'corta',
+                'tempo_cottura' => 11,
+                'src_img' => 'fusilli.webp',
+                'img_alt' => 'Pasta Fusilli La Molisana',
+                'in_offerta' => false,
+                'novita' => false,
+                'valutazione' => 4,
+                'venduti' => 1300,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Gnocchetti La Molisana',
+                'descrizione' => 'Gnocchetti sardi trafilati al bronzo, perfetti con sughi di carne.',
+                'prezzo' => 4.00,
+                'prezzo_offerta' => 3.50,
+                'peso' => 500,
+                'tipo' => 'corta',
+                'tempo_cottura' => 12,
+                'src_img' => 'gnocchetti.webp',
+                'img_alt' => 'Pasta Gnocchetti La Molisana',
+                'in_offerta' => true,
+                'novita' => true,
+                'valutazione' => 4,
+                'venduti' => 600,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Linguine La Molisana',
+                'descrizione' => 'Linguine piatte e sottili, ideali per sughi di pesce e frutti di mare.',
+                'prezzo' => 3.90,
+                'prezzo_offerta' => null,
+                'peso' => 500,
+                'tipo' => 'lunga',
+                'tempo_cottura' => 10,
+                'src_img' => 'linguine.webp',
+                'img_alt' => 'Pasta Linguine La Molisana',
+                'in_offerta' => false,
+                'novita' => false,
+                'valutazione' => 5,
+                'venduti' => 980,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Maccheroni La Molisana',
+                'descrizione' => 'Maccheroni classici della tradizione italiana, perfetti per ogni occasione.',
+                'prezzo' => 3.30,
+                'prezzo_offerta' => 2.90,
+                'peso' => 500,
+                'tipo' => 'corta',
+                'tempo_cottura' => 11,
+                'src_img' => 'maccheroni.webp',
+                'img_alt' => 'Pasta Maccheroni La Molisana',
+                'in_offerta' => true,
+                'novita' => false,
+                'valutazione' => 4,
+                'venduti' => 1500,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Orecchiette La Molisana',
+                'descrizione' => 'Orecchiette pugliesi trafilate al bronzo, perfette con le cime di rapa.',
+                'prezzo' => 4.20,
+                'prezzo_offerta' => null,
+                'peso' => 500,
+                'tipo' => 'speciale',
+                'tempo_cottura' => 12,
+                'src_img' => 'orecchiette.webp',
+                'img_alt' => 'Pasta Orecchiette La Molisana',
+                'in_offerta' => false,
+                'novita' => false,
+                'valutazione' => 5,
+                'venduti' => 890,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Paccheri La Molisana',
+                'descrizione' => 'Paccheri giganti ideali per essere farciti o per sughi ricchi e corposi.',
+                'prezzo' => 4.50,
+                'prezzo_offerta' => 3.99,
+                'peso' => 500,
+                'tipo' => 'speciale',
+                'tempo_cottura' => 13,
+                'src_img' => 'paccheri.webp',
+                'img_alt' => 'Pasta Paccheri La Molisana',
+                'in_offerta' => true,
+                'novita' => false,
+                'valutazione' => 4,
+                'venduti' => 670,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Pappardelle La Molisana',
+                'descrizione' => 'Pappardelle larghe e piatte, perfette per sughi di carne e funghi.',
+                'prezzo' => 4.30,
+                'prezzo_offerta' => null,
+                'peso' => 500,
+                'tipo' => 'lunga',
+                'tempo_cottura' => 8,
+                'src_img' => 'pappardelle.webp',
+                'img_alt' => 'Pasta Pappardelle La Molisana',
+                'in_offerta' => false,
+                'novita' => true,
+                'valutazione' => 5,
+                'venduti' => 750,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Penne La Molisana',
+                'descrizione' => 'Penne lisce trafilate al bronzo, il formato più versatile della cucina italiana.',
+                'prezzo' => 3.50,
+                'prezzo_offerta' => null,
+                'peso' => 500,
+                'tipo' => 'corta',
+                'tempo_cottura' => 11,
+                'src_img' => 'penne.webp',
+                'img_alt' => 'Pasta Penne La Molisana',
+                'in_offerta' => false,
+                'novita' => false,
+                'valutazione' => 4,
+                'venduti' => 2000,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Pici La Molisana',
+                'descrizione' => 'Pici toscani spessi e rustici, ideali con sughi di carne saporiti.',
+                'prezzo' => 4.80,
+                'prezzo_offerta' => 4.20,
+                'peso' => 500,
+                'tipo' => 'lunga',
+                'tempo_cottura' => 12,
+                'src_img' => 'pici.webp',
+                'img_alt' => 'Pasta Pici La Molisana',
+                'in_offerta' => true,
+                'novita' => false,
+                'valutazione' => 5,
+                'venduti' => 540,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Rigatoni La Molisana',
+                'descrizione' => 'Rigatoni con rigature profonde che catturano il sugo in ogni boccone.',
+                'prezzo' => 3.70,
+                'prezzo_offerta' => null,
+                'peso' => 500,
+                'tipo' => 'corta',
+                'tempo_cottura' => 12,
+                'src_img' => 'rigatoni.webp',
+                'img_alt' => 'Pasta Rigatoni La Molisana',
+                'in_offerta' => false,
+                'novita' => false,
+                'valutazione' => 4,
+                'venduti' => 1200,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Spaghetto Quadrato La Molisana',
+                'descrizione' => 'Spaghetto quadrato trafilato al bronzo, una specialità molisana unica.',
+                'prezzo' => 5.00,
+                'prezzo_offerta' => 4.50,
+                'peso' => 500,
+                'tipo' => 'speciale',
+                'tempo_cottura' => 9,
+                'src_img' => 'spaghetto-quadrato.webp',
+                'img_alt' => 'Pasta Spaghetto Quadrato La Molisana',
+                'in_offerta' => true,
+                'novita' => true,
+                'valutazione' => 5,
+                'venduti' => 430,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Strozzapreti La Molisana',
+                'descrizione' => 'Strozzapreti fatti a mano, perfetti con sughi di salsiccia e verdure.',
+                'prezzo' => 4.20,
+                'prezzo_offerta' => null,
+                'peso' => 500,
+                'tipo' => 'speciale',
+                'tempo_cottura' => 10,
+                'src_img' => 'strozzapreti.webp',
+                'img_alt' => 'Pasta Strozzapreti La Molisana',
+                'in_offerta' => false,
+                'novita' => false,
+                'valutazione' => 4,
+                'venduti' => 580,
+                'allergeni' => json_encode(['glutine'])
+            ],
+            [
+                'nome' => 'Tagliatelle La Molisana',
+                'descrizione' => 'Tagliatelle fresche all\'uovo trafilate al bronzo, una delizia per il palato.',
+                'prezzo' => 4.60,
+                'prezzo_offerta' => 3.99,
+                'peso' => 500,
+                'tipo' => 'lunga',
+                'tempo_cottura' => 7,
+                'src_img' => 'tagliatelle.webp',
+                'img_alt' => 'Pasta Tagliatelle La Molisana',
+                'in_offerta' => true,
+                'novita' => false,
+                'valutazione' => 5,
+                'venduti' => 920,
+                'allergeni' => json_encode(['glutine', 'uova'])
+            ],
+            [
+                'nome' => 'Trofie La Molisana',
+                'descrizione' => 'Trofie liguri trafilate al bronzo, ideali con pesto alla genovese.',
+                'prezzo' => 4.10,
+                'prezzo_offerta' => null,
+                'peso' => 500,
+                'tipo' => 'speciale',
+                'tempo_cottura' => 11,
+                'src_img' => 'trofie.webp',
+                'img_alt' => 'Pasta Trofie La Molisana',
+                'in_offerta' => false,
+                'novita' => true,
+                'valutazione' => 4,
+                'venduti' => 490,
+                'allergeni' => json_encode(['glutine'])
+            ]
+        ];
+
+        foreach ($pastas as $pasta) {
+            $pasta['slug'] = Str::slug($pasta['nome']);
+            $pasta['meta_title'] = $pasta['nome'] . ' | Pasta di Alta Qualità';
+            $pasta['meta_description'] = $pasta['descrizione'];
+
+            DB::table('products')->insert($pasta);
+        }
+    }
+}
