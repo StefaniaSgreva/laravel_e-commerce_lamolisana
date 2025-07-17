@@ -9,13 +9,59 @@ class ProductsController extends Controller
 {
     /**
      * Mostra l'elenco dei prodotti disponibili
-     * Ordinati per data di pubblicazione (dal più recente)
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::disponibili()
-            ->orderBy('created_at', 'desc')
-            ->paginate(12);
+        $query = Product::disponibili();
+
+        // Filtro per tipo
+        if ($request->filled('tipo')) {
+            $query->tipo($request->tipo);
+        }
+
+        // Filtro per offerta (checkbox)
+        if ($request->has('offerta')) {
+            $query->inOfferta();
+        }
+
+        // Filtro per novità (checkbox)
+        if ($request->has('novita')) {
+            $query->novita();
+        }
+
+        // Filtro per ricerca testo
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('nome', 'LIKE', "%$searchTerm%")
+                    ->orWhere('descrizione', 'LIKE', "%$searchTerm%");
+            });
+        }
+
+        // Ordinamento
+        $orderBy = $request->get('order_by', 'recenti');
+        switch ($orderBy) {
+            case 'prezzo_crescente':
+                $query->orderBy('prezzo');
+                break;
+            case 'prezzo_decrescente':
+                $query->orderBy('prezzo', 'desc');
+                break;
+            case 'piu_venduti':
+                $query->orderBy('venduti', 'desc');
+                break;
+            case 'piu_visti':
+                $query->orderBy('visualizzazioni', 'desc');
+                break;
+            case 'migliori':
+                $query->orderBy('valutazione', 'desc');
+                break;
+            default: // 'recenti'
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
+
+        $products = $query->paginate(12);
 
         return view('pages.products', [
             'products' => $products,
@@ -28,13 +74,9 @@ class ProductsController extends Controller
      */
     public function show(Product $product)
     {
-        // Verifica che il prodotto sia disponibile
         abort_unless($product->disponibile, 404);
-
-        // Incrementa il contatore delle visualizzazioni
         $product->increment('visualizzazioni');
 
-        // Recupera 4 prodotti correlati (stesso tipo, random)
         $relatedProducts = Product::disponibili()
             ->tipo($product->tipo)
             ->where('id', '!=', $product->id)

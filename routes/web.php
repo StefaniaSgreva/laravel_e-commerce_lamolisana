@@ -26,7 +26,7 @@ Route::get('/blog', function () {
 //     return view('pages.products', compact('products'));
 // })->name('products');
 Route::get('/prodotti', [ProductsController::class, 'index'])->name('products');
-Route::get('/prodotti/{product}', [ProductsController::class, 'show'])->name('singleproduct');
+Route::get('/prodotti/{product:slug}', [ProductsController::class, 'show'])->name('singleproduct');
 
 Route::get('/contatti', [ContactsController::class, 'index'])->name('contacts');
 

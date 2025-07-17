@@ -28,6 +28,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 4,
                 'venduti' => 1250,
+                'visualizzazioni' => 8750, // venduti * 7
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -44,6 +45,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => true,
                 'valutazione' => 5,
                 'venduti' => 780,
+                'visualizzazioni' => 6240, // venduti * 8 (novità)
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -60,6 +62,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 4,
                 'venduti' => 950,
+                'visualizzazioni' => 7600, // venduti * 8 (offerta)
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -76,6 +79,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 5,
                 'venduti' => 1100,
+                'visualizzazioni' => 7700, // venduti * 7
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -92,6 +96,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 4,
                 'venduti' => 850,
+                'visualizzazioni' => 6800, // venduti * 8 (offerta)
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -108,6 +113,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 3,
                 'venduti' => 720,
+                'visualizzazioni' => 5040, // venduti * 7
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -124,6 +130,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 4,
                 'venduti' => 1300,
+                'visualizzazioni' => 9100, // venduti * 7
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -140,6 +147,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => true,
                 'valutazione' => 4,
                 'venduti' => 600,
+                'visualizzazioni' => 5400, // venduti * 9 (novità + offerta)
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -156,6 +164,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 5,
                 'venduti' => 980,
+                'visualizzazioni' => 6860, // venduti * 7
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -172,6 +181,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 4,
                 'venduti' => 1500,
+                'visualizzazioni' => 12000, // venduti * 8 (offerta)
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -188,6 +198,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 5,
                 'venduti' => 890,
+                'visualizzazioni' => 6230, // venduti * 7
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -204,6 +215,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 4,
                 'venduti' => 670,
+                'visualizzazioni' => 5360, // venduti * 8 (offerta)
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -220,6 +232,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => true,
                 'valutazione' => 5,
                 'venduti' => 750,
+                'visualizzazioni' => 6750, // venduti * 9 (novità)
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -236,6 +249,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 4,
                 'venduti' => 2000,
+                'visualizzazioni' => 14000, // venduti * 7
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -252,6 +266,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 5,
                 'venduti' => 540,
+                'visualizzazioni' => 4320, // venduti * 8 (offerta)
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -268,6 +283,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 4,
                 'venduti' => 1200,
+                'visualizzazioni' => 8400, // venduti * 7
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -284,6 +300,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => true,
                 'valutazione' => 5,
                 'venduti' => 430,
+                'visualizzazioni' => 4300, // venduti * 10 (novità + offerta + speciale)
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -300,6 +317,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 4,
                 'venduti' => 580,
+                'visualizzazioni' => 4640, // venduti * 8 (speciale)
                 'allergeni' => json_encode(['glutine'])
             ],
             [
@@ -316,6 +334,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => false,
                 'valutazione' => 5,
                 'venduti' => 920,
+                'visualizzazioni' => 7360, // venduti * 8 (offerta)
                 'allergeni' => json_encode(['glutine', 'uova'])
             ],
             [
@@ -332,6 +351,7 @@ class ProductsTableSeeder extends Seeder
                 'novita' => true,
                 'valutazione' => 4,
                 'venduti' => 490,
+                'visualizzazioni' => 4410, // venduti * 9 (novità + speciale)
                 'allergeni' => json_encode(['glutine'])
             ]
         ];
@@ -340,6 +360,7 @@ class ProductsTableSeeder extends Seeder
             $pasta['slug'] = Str::slug($pasta['nome']);
             $pasta['meta_title'] = $pasta['nome'] . ' | Pasta di Alta Qualità';
             $pasta['meta_description'] = $pasta['descrizione'];
+            $pasta['disponibile'] = true;
 
             DB::table('products')->insert($pasta);
         }

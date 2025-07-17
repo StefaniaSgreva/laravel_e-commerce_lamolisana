@@ -153,24 +153,48 @@
         padding-bottom: 0.5rem;
     }
 
+    /* Filtri Prodotti */
+    select {
+        background-image: none; /* Rimuove la freccia di default */
+        padding-right: 2.5rem;
+    }
+
+    /* Adattamenti mobile */
+    @media (max-width: 767px) {
+        .grid > div {
+            width: 100%;
+        }
+
+        .flex.space-x-3 {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .flex.space-x-3 > * {
+            width: 100%;
+        }
+    }
 }
 
 /* Utility personalizzate */
 @layer utilities {
-    /* Colori come classi custom */
-    .bg-molisana-blue { background-color: #002d75; }
-    .text-molisana-blue { color: #002d75; }
-    .border-molisana-blue { border-color: #002d75; }
-
-    .bg-molisana-dark-orange { background-color: #973c00; }
-    .text-molisana-dark-orange { color: #973c00; }
-
+    /* Colori Molisana */
     .bg-molisana-orange { background-color: #e17100; }
     .text-molisana-orange { color: #e17100; }
     .border-molisana-orange { border-color: #e17100; }
+    .focus\:ring-molisana-orange:focus { --tw-ring-color: #e17100; }
+
+    .bg-molisana-dark-orange { background-color: #973c00; }
+    .text-molisana-dark-orange { color: #973c00; }
+    .border-molisana-dark-orange { border-color: #973c00; }
+    .focus\:ring-molisana-dark-orange:focus { --tw-ring-color: #973c00; }
 
     .bg-molisana-orange-hover { background-color: #bb4d00; }
     .hover\:bg-molisana-orange-hover:hover { background-color: #bb4d00; }
+
+    .bg-molisana-blue { background-color: #002d75; }
+    .text-molisana-blue { color: #002d75; }
+    .border-molisana-blue { border-color: #002d75; }
 
     /* Animazione pulse personalizzata */
     .animate-pulse-slow {

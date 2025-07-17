@@ -33,7 +33,8 @@ class Product extends Model
         'novita',
         'valutazione',
         'venduti',
-        'allergeni'
+        'allergeni',
+        'visualizzazioni'
     ];
 
     // Casting automatico dei campi
@@ -54,7 +55,8 @@ class Product extends Model
         'sconto_percentuale',
         'prezzo_finale',
         'peso_formattato',
-        'tempo_cottura_formattato'
+        'tempo_cottura_formattato',
+        'visualizzazioni_formattate'
     ];
 
     // Boot del model per gestire gli eventi
@@ -139,6 +141,12 @@ class Product extends Model
         return $this->tempo_cottura ? "{$this->tempo_cottura} min" : null;
     }
 
+    // Restituisce il numero di visualizzazioni dell'articolo formattato
+    public function getVisualizzazioniFormattateAttribute(): string
+    {
+        return number_format($this->visualizzazioni, 0, ',', '.');
+    }
+
     // SCOPE QUERY ==============================================
 
     // Filtra solo prodotti disponibili
@@ -175,5 +183,11 @@ class Product extends Model
     public function scopePiuVenduti($query, int $limit = 5)
     {
         return $query->orderBy('venduti', 'desc')->take($limit);
+    }
+
+    // Ottiene i prodotti più visualizzati
+    public function scopePiuVisti($query, int $limit = 5)
+    {
+        return $query->orderBy('visualizzazioni', 'desc')->take($limit);
     }
 }

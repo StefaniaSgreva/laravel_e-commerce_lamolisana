@@ -31,6 +31,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('valutazione')->nullable()->comment('Valutazione 1-5 stelle');
             $table->unsignedInteger('venduti')->default(0);
             $table->json('allergeni')->nullable();
+            $table->unsignedBigInteger('visualizzazioni')->default(0);
             $table->timestamps();
             $table->softDeletes();
 
