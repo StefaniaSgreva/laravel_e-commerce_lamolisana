@@ -135,7 +135,7 @@
                             </span>
                         @endif
                         @if($product->novita)
-                            <span class="bg-molisana-green text-white px-3 py-1 rounded-full text-sm font-bold">
+                            <span class="bg-molisana-blue text-white px-3 py-1 rounded-full text-sm font-bold">
                                 NOVITÀ
                             </span>
                         @endif
