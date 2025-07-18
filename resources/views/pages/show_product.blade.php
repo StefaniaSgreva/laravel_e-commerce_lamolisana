@@ -25,7 +25,7 @@
             <!-- Product Image - Modificato per altezza fissa -->
             <div class="lg:w-5/12 flex">
                 <div class="bg-white rounded-xl shadow-md overflow-hidden w-full self-stretch">
-                    <figure class="relative h-full">
+                    <figure class="relative h-full min-h-[300px] lg:min-h-0">
                         <div class="absolute inset-0 flex items-center justify-center p-6">
                             <img
                                 src="{{ Vite::asset('resources/img/products/' . $product->src_img) }}"
