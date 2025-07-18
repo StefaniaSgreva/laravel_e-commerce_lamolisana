@@ -13,12 +13,13 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/chi-siamo', [AboutController::class, 'index'])->name('about');
 
-Route::get('/blog', function () {
-    $posts = config('molisana.posts');
-    return view('pages.blog', compact('posts'));
-})->name('blog');
-// Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+// Route::get('/blog', function () {
+//     $posts = config('molisana.posts');
+//     return view('pages.blog', compact('posts'));
+// })->name('blog');
+Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('posts.show');
 
 // Route::get('/prodotti', function () {
 //     $products = config('molisana.pasta');

@@ -107,6 +107,13 @@ class Post extends Model
 
         static::creating(function ($post) {
             $post->slug = \Illuminate\Support\Str::slug($post->titolo);
+            // Make slug unique if it already exists
+            $originalSlug = $post->slug;
+            $count = 1;
+            while (static::where('slug', $post->slug)->exists()) {
+                $post->slug = "{$originalSlug}-{$count}";
+                $count++;
+            }
         });
 
         static::updating(function ($post) {

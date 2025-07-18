@@ -24,7 +24,7 @@ class PostsTableSeeder extends Seeder
         $formatiPasta = [
             'bucatini',
             'calamarata',
-            'caserecce',
+            'casarecce',
             'chitarra',
             'conchiglie',
             'farfalle',

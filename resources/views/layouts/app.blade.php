@@ -33,11 +33,11 @@
     <!-- CSS/JS con Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Meta tag per social media (opzionali) -->
-    {{-- <meta property="og:title" content="@yield('page-title', 'La Molisana')">
+    <!-- Meta tag per social media -->
+    <meta property="og:title" content="@yield('page-title', 'La Molisana')">
     <meta property="og:description" content="@yield('page-description', 'Pasta artigianale di qualità dal 1912')">
     <meta property="og:image" content="{{ Vite::asset('resources/img/social-share.jpg') }}">
-    <meta name="theme-color" content="#ffffff"> --}}
+    <meta name="theme-color" content="#ffffff">
 </head>
 <body class="antialiased text-gray-900 bg-neutral-50 min-h-screen">
     {{-- PAGE LOADER --}}
