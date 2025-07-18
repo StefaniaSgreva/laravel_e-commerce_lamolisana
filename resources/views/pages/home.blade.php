@@ -5,10 +5,10 @@
     <!-- Hero Section -->
     <section class="bg-molisana-blue text-white py-16 md:py-24">
         <div class="container mx-auto px-4 text-center">
-            <h1 class="text-3xl md:text-4xl font-bold mb-4">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">
                 Benvenuti da La Molisana
             </h1>
-            <p class="text-lg mb-6">
+            <p class="text-xl max-w-3xl mx-auto mb-8">
                 Pasta artigianale dal 1912
             </p>
             <div class="flex justify-center gap-4">
@@ -48,30 +48,26 @@
         <div class="container mx-auto px-4">
             <h2 class="text-2xl font-bold text-center text-molisana-dark-orange mb-8">Le nostre paste</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                @foreach($featuredProducts as $product)
                 <div class="bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow text-center">
-                    <div class="bg-gray-100 h-32 mb-3 rounded-md flex justify-center items-center overflow-hidden">
-                        <img src="{{ Vite::asset('resources/img/spaghetti.webp') }}" alt="Spaghetti" class="w-[60%]">
-                    </div>
-                    <h3 class="font-medium text-molisana-blue">Spaghetti</h3>
+                    <a href="{{ route('singleproduct', $product->slug) }}" class="block">
+                        <div class="bg-gray-100 h-32 mb-3 rounded-md flex justify-center items-center overflow-hidden">
+                            <img src="{{ Vite::asset('resources/img/products/' . $product->src_img) }}"
+                                alt="{{ $product->img_alt ?? $product->nome }}"
+                                class="w-[60%] object-contain">
+                        </div>
+                        <h3 class="font-medium text-molisana-blue">{{ $product->nome }}</h3>
+                        <div class="mt-2">
+                            @if($product->in_offerta)
+                                <span class="text-sm text-gray-400 line-through">{{ $product->prezzo_formattato }}</span>
+                                <span class="text-molisana-orange font-semibold">{{ $product->prezzo_offerta_formattato }}</span>
+                            @else
+                                <span class="text-molisana-blue font-semibold">{{ $product->prezzo_formattato }}</span>
+                            @endif
+                        </div>
+                    </a>
                 </div>
-                <div class="bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow text-center">
-                    <div class="bg-gray-100 h-32 mb-3 rounded-md flex justify-center items-center overflow-hidden">
-                        <img src="{{ Vite::asset('resources/img/penne.webp') }}" alt="Penne">
-                    </div>
-                    <h3 class="font-medium text-molisana-blue">Penne</h3>
-                </div>
-                <div class="bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow text-center">
-                    <div class="bg-gray-100 h-32 mb-3 rounded-md flex justify-center items-center overflow-hidden">
-                        <img src="{{ Vite::asset('resources/img/fusilli.webp') }}" alt="Fusilli">
-                    </div>
-                    <h3 class="font-medium text-molisana-blue">Fusilli</h3>
-                </div>
-                <div class="bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow text-center">
-                    <div class="flex justify-center items-center bg-gray-100 h-32 mb-3 rounded-md overflow-hidden">
-                        <img src="{{ Vite::asset('resources/img/ziti.webp') }}" alt="Ziti">
-                    </div>
-                    <h3 class="font-medium text-molisana-blue">Ziti</h3>
-                </div>
+                @endforeach
             </div>
             <div class="text-center mt-8">
                 <a href="{{ route('products') }}" class="inline-block bg-molisana-orange hover:bg-molisana-orange-hover text-white px-6 py-2 rounded-md transition-colors">
