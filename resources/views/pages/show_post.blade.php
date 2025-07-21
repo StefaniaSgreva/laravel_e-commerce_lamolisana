@@ -110,7 +110,7 @@
 
     <!-- Contenuto articolo -->
     <article class="prose prose-lg max-w-none">
-        {!! $post->contenuto !!}
+         {!! $post->contenuto !!} {{-- HTML nel db --}}
     </article>
 
     <!-- Navigazione articoli -->

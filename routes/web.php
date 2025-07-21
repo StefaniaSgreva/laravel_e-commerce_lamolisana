@@ -7,6 +7,7 @@ use App\Http\Controllers\AboutController as AboutController;
 use App\Http\Controllers\ProductsController as ProductsController;
 use App\Http\Controllers\BlogController as BlogController;
 use App\Http\Controllers\ContactsController as ContactsController;
+use App\Http\Controllers\LeadController as LeadController;
 use App\Http\Controllers\CartController as CartController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -29,6 +30,9 @@ Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('posts.show');
 Route::get('/prodotti', [ProductsController::class, 'index'])->name('products');
 Route::get('/prodotti/{product:slug}', [ProductsController::class, 'show'])->name('singleproduct');
 
+// Visualizzazione form
 Route::get('/contatti', [ContactsController::class, 'index'])->name('contacts');
+// Invio form
+Route::post('/contatti', [LeadController::class, 'store'])->name('contactsmail');
 
 Route::get('/carrello', [CartController::class, 'index'])->name('cart');

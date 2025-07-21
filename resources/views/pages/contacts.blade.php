@@ -22,52 +22,93 @@
                 <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
                     <h2 class="text-2xl font-bold text-molisana-dark-orange mb-6">Scrivici un messaggio</h2>
 
-                    <form action="" method="POST" class="space-y-6">
+                    <form action="{{ route('contactsmail') }}" method="POST" class="space-y-6" id="contact-form">
                         @csrf
 
+                        <!-- Campo Nome -->
                         <div>
-                            <label for="name" class="block text-gray-700 font-medium mb-2">Nome e Cognome *</label>
-                            <input type="text" id="name" name="name" required
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-molisana-orange focus:border-transparent">
+                            <label for="nome" class="block text-gray-700 font-medium mb-2">Nome e Cognome *</label>
+                            <input type="text" id="nome" name="nome" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-molisana-orange focus:border-transparent"
+                                value="{{ old('nome') }}">
+                            @error('nome')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
+                        <!-- Campo Email -->
                         <div>
                             <label for="email" class="block text-gray-700 font-medium mb-2">Email *</label>
                             <input type="email" id="email" name="email" required
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-molisana-orange focus:border-transparent">
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-molisana-orange focus:border-transparent"
+                                value="{{ old('email') }}">
+                            @error('email')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
+                        <!-- Campo Telefono -->
                         <div>
-                            <label for="phone" class="block text-gray-700 font-medium mb-2">Telefono</label>
-                            <input type="tel" id="phone" name="phone"
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-molisana-orange focus:border-transparent">
+                            <label for="telefono" class="block text-gray-700 font-medium mb-2">Telefono</label>
+                            <input type="tel" id="telefono" name="telefono"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-molisana-orange focus:border-transparent"
+                                value="{{ old('telefono') }}">
+                            @error('telefono')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
+                        <!-- Campo Oggetto -->
                         <div>
-                            <label for="subject" class="block text-gray-700 font-medium mb-2">Oggetto *</label>
-                            <select id="subject" name="subject" required
+                            <label for="oggetto" class="block text-gray-700 font-medium mb-2">Oggetto *</label>
+                            <select id="oggetto" name="oggetto" required
                                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-molisana-orange focus:border-transparent">
-                                <option value="" disabled selected>Seleziona un'opzione</option>
-                                <option value="info">Informazioni prodotti</option>
-                                <option value="distributor">Diventa distributore</option>
-                                <option value="feedback">Feedback</option>
-                                <option value="other">Altro</option>
+                                <option value="" disabled {{ old('oggetto') ? '' : 'selected' }}>Seleziona un'opzione</option>
+                                <option value="informazioni" {{ old('oggetto') == 'informazioni' ? 'selected' : '' }}>Informazioni prodotti</option>
+                                <option value="distributore" {{ old('oggetto') == 'distributore' ? 'selected' : '' }}>Diventa distributore</option>
+                                <option value="feedback" {{ old('oggetto') == 'feedback' ? 'selected' : '' }}>Feedback</option>
+                                <option value="altro" {{ old('oggetto') == 'altro' ? 'selected' : '' }}>Altro</option>
                             </select>
+                            @error('oggetto')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
+                        <!-- Campo Messaggio -->
                         <div>
-                            <label for="message" class="block text-gray-700 font-medium mb-2">Messaggio *</label>
-                            <textarea id="message" name="message" rows="5" required
-                                      class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-molisana-orange focus:border-transparent"></textarea>
+                            <label for="messaggio" class="block text-gray-700 font-medium mb-2">Messaggio *</label>
+                            <textarea id="messaggio" name="messaggio" rows="5" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-molisana-orange focus:border-transparent">{{ old('messaggio') }}</textarea>
+                            @error('messaggio')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
+                        <!-- Privacy -->
                         <div class="flex items-center">
-                            <input type="checkbox" id="privacy" name="privacy" required
-                                   class="mr-2 rounded text-molisana-orange focus:ring-molisana-orange">
-                            <label for="privacy" class="text-gray-700 text-sm">
-                                Acconsento al trattamento dei miei dati personali secondo la Privacy Policy
+                            <input type="checkbox" id="accettazione_privacy" name="accettazione_privacy" value="1" required
+                                class="mr-2 rounded text-molisana-orange focus:ring-molisana-orange"
+                                {{ old('accettazione_privacy') ? 'checked' : '' }}>
+                            <label for="accettazione_privacy" class="text-gray-700 text-sm">
+                                Acconsento al trattamento dei miei dati personali secondo la <a href="#" class="text-molisana-blue hover:underline">Privacy Policy</a>
                             </label>
                         </div>
+                        @error('accettazione_privacy')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+
+                        <!-- Messaggi di stato -->
+                        @if(session('success'))
+                            <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if($errors->any() && !$errors->has('nome') && !$errors->has('email') && !$errors->has('telefono') && !$errors->has('oggetto') && !$errors->has('messaggio') && !$errors->has('accettazione_privacy'))
+                            <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg">
+                                Si è verificato un errore durante l'invio. Riprova più tardi.
+                            </div>
+                        @endif
 
                         <button type="submit"
                                 class="w-full bg-molisana-orange hover:bg-molisana-orange-hover text-white font-bold py-3 px-4 rounded-md transition-colors">
