@@ -13,7 +13,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @forelse($posts as $post)
-            <article class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+            <article class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
                 <!-- Immagine del post -->
                 <div class="relative pb-[56.25%] overflow-hidden">
                     @if($post->immagine_copertina)
@@ -31,7 +31,7 @@
                 </div>
 
                 <!-- Contenuto del post -->
-                <div class="p-6">
+                <div class="p-6 flex-grow">
                     <h2 class="text-2xl font-bold text-molisana-dark-orange mb-3">
                         {{ $post->titolo }}
                     </h2>
@@ -49,8 +49,8 @@
                     </a>
                 </div>
 
-                <!-- Footer della card -->
-                <div class="px-6 py-4 bg-gray-50 border-t border-gray-100">
+                <!-- Footer della card - sempre in fondo -->
+                <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 mt-auto">
                     <div class="flex items-center text-sm text-gray-500">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
