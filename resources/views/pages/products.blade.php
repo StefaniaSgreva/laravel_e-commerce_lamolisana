@@ -199,13 +199,18 @@
                                     Scopri di più
                                     <span class="sr-only">: {{ $product->nome }}</span>
                                 </a>
-                                <button
-                                    class="cursor-pointer bg-molisana-orange text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-molisana-orange-hover transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-molisana-blue"
-                                    aria-label="Aggiungi {{ $product->nome }} al carrello"
-                                >
-                                    <i class="fas fa-shopping-cart mr-2" aria-hidden="true"></i>
-                                    Acquista
-                                </button>
+                                <form action="{{ route('cart.add', $product) }}" method="POST" class="inline" onsubmit="handleAddToCart(event)">
+                                    @csrf
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button
+                                        type="submit"
+                                        class="cursor-pointer bg-molisana-orange text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-molisana-orange-hover transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-molisana-blue"
+                                        aria-label="Aggiungi {{ $product->nome }} al carrello"
+                                    >
+                                        <i class="fas fa-shopping-cart mr-2" aria-hidden="true"></i>
+                                        Acquista
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -227,4 +232,88 @@
         {{ $products->appends(request()->query())->links('components.pagination') }}
     </div>
 </div>
+
+@include('components.cart_popup')
+<script>
+    // Gestione aggiunta al carrello con popup
+    function handleAddToCart(event) {
+        event.preventDefault();
+        const form = event.target;
+        const button = form.querySelector('button[type="submit"]');
+        const buttonText = button.innerHTML;
+
+        // Disabilita il bottone durante la richiesta
+        button.disabled = true;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Aggiungendo...';
+
+        // Invia la richiesta AJAX
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams(new FormData(form))
+        })
+        .then(response => {
+            if (response.ok) {
+                showCartPopup();
+                updateCartCounter();
+            } else {
+                throw new Error('Errore durante l\'aggiunta al carrello');
+            }
+        })
+        .catch(error => {
+            alert(error.message);
+        })
+        .finally(() => {
+            button.disabled = false;
+            button.innerHTML = buttonText;
+        });
+    }
+
+    // Mostra il popup del carrello
+    function showCartPopup() {
+        const popup = document.getElementById('cart-popup');
+        const content = document.getElementById('popup-content');
+
+        popup.classList.remove('hidden');
+        setTimeout(() => {
+            content.classList.add('popup-show');
+        }, 10);
+    }
+
+    // Chiudi il popup del carrello
+    function closeCartPopup() {
+        const popup = document.getElementById('cart-popup');
+        const content = document.getElementById('popup-content');
+
+        content.classList.remove('popup-show');
+        setTimeout(() => {
+            popup.classList.add('hidden');
+        }, 300);
+    }
+
+    // Aggiorna il contatore del carrello
+    function updateCartCounter() {
+        fetch('{{ route("cart.count") }}')
+            .then(response => response.json())
+            .then(data => {
+                const counter = document.getElementById('cart-counter');
+                if (counter) {
+                    counter.textContent = data.count;
+                    counter.classList.toggle('hidden', data.count === 0);
+                }
+            });
+    }
+
+    // Chiudi il popup premendo ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeCartPopup();
+        }
+    });
+</script>
+
 @endsection

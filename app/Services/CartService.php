@@ -53,7 +53,7 @@ class CartService
                 'session_id' => $this->sessionId
             ],
             [
-                'quantity' => DB::raw("quantity + $quantity"), // Incrementa la quantità
+                'quantity' => $quantity,
                 'price' => $price, // Blocca il prezzo al momento dell'aggiunta
             ]
         );

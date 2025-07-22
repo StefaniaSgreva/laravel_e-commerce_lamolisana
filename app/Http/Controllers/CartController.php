@@ -67,9 +67,7 @@ class CartController extends Controller
 
         $this->cartService->updateQuantity($product, $request->quantity);
 
-        return redirect()
-            ->back()
-            ->with('success', 'Quantità aggiornata');
+        return back()->with('success', 'Quantità aggiornata');
     }
 
     /**

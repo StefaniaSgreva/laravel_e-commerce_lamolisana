@@ -79,9 +79,17 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('cart') }}"
+                {{-- <a href="{{ route('cart') }}"
                 class="nav-link {{ Route::is('cart') ? 'nav-link-active' : '' }}">
                     <i class="fa-solid fa-cart-shopping"></i>
+                </a> --}}
+                <a href="{{ route('cart') }}" class="relative text-gray-700 hover:text-molisana-orange transition-colors">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-counter"
+                        class="absolute -top-2 -right-2 bg-molisana-orange text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center
+                        {{ $cartCount > 0 ? '' : 'hidden' }}">
+                        {{ $cartCount > 0 ? $cartCount : '' }}
+                    </span>
                 </a>
             </li>
         </ul>

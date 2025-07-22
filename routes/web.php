@@ -35,4 +35,12 @@ Route::get('/contatti', [ContactsController::class, 'index'])->name('contacts');
 // Invio form
 Route::post('/contatti', [LeadController::class, 'store'])->name('contactsmail');
 
-Route::get('/carrello', [CartController::class, 'index'])->name('cart');
+// Rotte del carrello
+Route::prefix('carrello')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('cart'); // Manteniamo il nome 'cart' per compatibilità
+    Route::get('/count', [CartController::class, 'count'])->name('cart.count');
+    Route::post('/aggiungi/{product}', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/rimuovi/{product}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/aggiorna/{product}', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/svuota', [CartController::class, 'clear'])->name('cart.clear');
+});
