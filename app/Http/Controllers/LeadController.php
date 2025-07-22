@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\NewLeadNotification;
+use App\Mail\NewLeadConfirmation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
@@ -48,12 +49,20 @@ class LeadController extends Controller
             $new_lead->fill($data);
             $new_lead->save();
 
+            // Invia notifica a info@lamolisana.it
             Mail::to('info@lamolisana.it')
                 ->send(new NewLeadNotification($new_lead));
+            // ->queue(new NewLeadNotification($new_lead)); per produzione
+
+            // Invia email di conferma all'utente
+            Mail::to($new_lead->email)
+                // ->send(new NewLeadConfirmation($new_lead));
+                ->later(now()->addMinutes(2), new NewLeadConfirmation($new_lead));
+            // ->queue(new NewLeadConfirmation($new_lead)); per produzione
 
             return redirect()
                 ->back()
-                ->with('success', 'Grazie per averci contattato! Ti risponderemo al più presto.');
+                ->with('success', 'Grazie per averci contattato! Abbiamo inviato una email di conferma a ' . $new_lead->email);
         } catch (\Exception $e) {
             Log::error('Errore durante il salvataggio del lead: ' . $e->getMessage());
 
