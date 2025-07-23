@@ -3,21 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\CartItem;
+use Illuminate\Support\Facades\View;
 
 abstract class Controller
 {
-    public function shareCartCount()
+    public function __construct()
+    {
+        $this->shareCartCount();
+    }
+
+    protected function shareCartCount(): void
     {
         $cartCount = 0;
 
-        // if (auth()->check()) {
-        //     $cartCount = auth()->user()->cartItems()->count();
-        // } else {
-        //     $cartCount = CartItem::where('session_id', session()->getId())->count();
-        // }
-
-        $cartCount = CartItem::where('session_id', session()->getId())->count();
-
+        if (session()->getId()) {
+            // Somma tutte le quantità invece di contare solo i record
+            $cartCount = CartItem::where('session_id', session()->getId())->sum('quantity');
+        }
 
         View::share('cartCount', $cartCount);
     }

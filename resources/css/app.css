@@ -167,6 +167,11 @@
         );
         transform: scaleX(1.1);
     }
+    /* Carrello link attivo */
+    .cart-link-active{
+        padding-bottom: 5px;
+     border-bottom: 3px solid #bb4d00;
+    }
 
     /* Animazione principale */
     #main-header {

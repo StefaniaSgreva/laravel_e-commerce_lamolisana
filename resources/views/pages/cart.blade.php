@@ -49,7 +49,7 @@
                             <div class="grid grid-cols-12 p-4 items-center">
                                 <!-- Product Image & Name -->
                                 <div class="col-span-6 md:col-span-5 flex items-center">
-                                    <img src="{{ Vite::asset('resources/img/products/' . $item->src_img) }}"
+                                    <img src="{{ Vite::asset('resources/img/products/' . $item->product->src_img) }}"
                                          alt="{{ $item->product->img_alt }}"
                                          class="w-20 h-20 object-cover rounded-md mr-4">
                                     <div>

@@ -13,6 +13,7 @@ class CartController extends Controller
     // Inietta il CartService nel controller
     public function __construct(CartService $cartService)
     {
+        parent::__construct(); // Per tenere opzioni costruttore controller base
         $this->cartService = $cartService;
     }
 
