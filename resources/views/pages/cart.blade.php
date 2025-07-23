@@ -138,7 +138,9 @@
                             </div>
                         </div>
 
-                        <a href="#" class="block w-full bg-molisana-orange hover:bg-molisana-orange-hover text-white font-bold py-3 px-4 rounded-md transition-colors mb-4 text-center">
+                        <a href="{{ route('checkout') }}"
+                        class="block w-full bg-molisana-orange hover:bg-molisana-orange-hover text-white font-bold py-3 px-4 rounded-md transition-colors mb-4 text-center {{ $cartItems->isEmpty() ? 'opacity-50 cursor-not-allowed' : '' }}"
+                        @if($cartItems->isEmpty()) disabled @endif>
                             Procedi al Checkout
                         </a>
 

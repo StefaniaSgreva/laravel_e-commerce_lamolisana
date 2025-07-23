@@ -9,6 +9,8 @@ use App\Http\Controllers\BlogController as BlogController;
 use App\Http\Controllers\ContactsController as ContactsController;
 use App\Http\Controllers\LeadController as LeadController;
 use App\Http\Controllers\CartController as CartController;
+use App\Http\Controllers\OrderController as OrderController;
+use App\Http\Controllers\CheckoutController as CheckoutController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -44,3 +46,17 @@ Route::prefix('carrello')->group(function () {
     Route::post('/aggiorna/{product}', [CartController::class, 'update'])->name('cart.update');
     Route::post('/svuota', [CartController::class, 'clear'])->name('cart.clear');
 });
+
+// Checkout
+Route::prefix('checkout')->group(function () {
+    Route::get('/', [CheckoutController::class, 'show'])->name('checkout');
+    Route::post('/', [CheckoutController::class, 'store'])->name('checkout.store');
+});
+
+// Ordini
+Route::get('/ordine/conferma/{order_code}', [OrderController::class, 'showConfirmation'])
+    ->name('pages.order_confirmation');
+
+// Pagamento
+
+// Auth

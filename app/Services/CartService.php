@@ -120,6 +120,14 @@ class CartService
     }
 
     /**
+     * Controlla se il carello è vuoto
+     */
+    public function isEmpty(): bool
+    {
+        return $this->getCart()->isEmpty();
+    }
+
+    /**
      * Unisce il carrello guest con quello dell'utente dopo il login
      */
     public function mergeGuestCartToUser($user)
@@ -141,5 +149,27 @@ class CartService
 
             $item->delete(); // Elimina il record guest
         }
+    }
+
+    /**
+     * Formatta i dati del carello per salavataggio tabella ordini
+     */
+    public function getFormattedCart(): array
+    {
+        return $this->getCart()->map(function ($item) {
+            // Verifica che il prodotto esista ancora
+            if (!$item->product) {
+                return null; // o gestisci l'errore
+            }
+
+            return [
+                'product_id' => $item->product_id,
+                'name' => $item->product->nome,
+                'price' => $item->price,
+                'quantity' => $item->quantity,
+                // 'img_url' => $item->product->src_img, // Opzionale
+                'product_data' => $item->product->toArray() // Tutti i dati del prodotto
+            ];
+        })->filter()->toArray(); // Filtra eventuali null
     }
 }
