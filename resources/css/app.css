@@ -377,6 +377,23 @@
         0% { opacity: 0.8; transform: translateY(-5px); }
         100% { opacity: 1; transform: translateY(0); }
     }
+
+    /* Transizioni per il popup */
+    #cart-popup {
+        transition: opacity 0.3s ease;
+    }
+    #cart-popup.opacity-100 {
+        opacity: 1;
+    }
+    #popup-content {
+        transition: all 0.3s ease;
+    }
+    #popup-content.opacity-100 {
+        opacity: 1;
+    }
+    #popup-content.translate-y-0 {
+        transform: translateY(0);
+    }
 }
 
 

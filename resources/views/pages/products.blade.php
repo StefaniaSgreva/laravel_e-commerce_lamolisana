@@ -280,7 +280,8 @@
 
         popup.classList.remove('hidden');
         setTimeout(() => {
-            content.classList.add('popup-show');
+            popup.classList.add('opacity-100');
+            content.classList.add('opacity-100', 'translate-y-0');
         }, 10);
     }
 
@@ -289,7 +290,8 @@
         const popup = document.getElementById('cart-popup');
         const content = document.getElementById('popup-content');
 
-        content.classList.remove('popup-show');
+        content.classList.remove('opacity-100', 'translate-y-0');
+        popup.classList.remove('opacity-100');
         setTimeout(() => {
             popup.classList.add('hidden');
         }, 300);
