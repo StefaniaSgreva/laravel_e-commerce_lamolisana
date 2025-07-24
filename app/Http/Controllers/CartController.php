@@ -23,9 +23,12 @@ class CartController extends Controller
     public function index()
     {
         $cartItems = $this->cartService->getCart();
+        $subtotal = $this->cartService->getSubtotal();
+        $shipping = $this->cartService->getShipping();
+        $discount = $this->cartService->getDiscount();
         $total = $this->cartService->getTotal();
 
-        return view('pages.cart', compact('cartItems', 'total'));
+        return view('pages.cart', compact('cartItems', 'subtotal', 'shipping', 'discount', 'total'));
     }
 
     /**
@@ -81,5 +84,21 @@ class CartController extends Controller
         return redirect()
             ->back()
             ->with('success', 'Carrello svuotato');
+    }
+
+
+    /**
+     * Totale ordine
+     */
+    public function getTotals()
+    {
+        $cartService = new CartService();
+
+        return response()->json([
+            'subtotal' => $cartService->getSubtotal(),
+            'shipping' => $cartService->getShipping(),
+            'discount' => $cartService->getDiscount(),
+            'total' => $cartService->getTotal()
+        ]);
     }
 }

@@ -84,7 +84,7 @@
                             <p>{{ $item->product->nome }} × {{ $item->quantity }}</p>
                             <p class="text-sm text-gray-500">{{ $item->product->categoria }}</p>
                         </div>
-                        <p>€{{ number_format($item->price * $item->quantity, 2) }}</p>
+                        <p>€{{ number_format($item->price * $item->quantity, 2, ',', '.') }}</p>
                     </div>
                     @endforeach
                 </div>
@@ -92,15 +92,27 @@
                 <div class="border-t pt-4 mt-4">
                     <div class="flex justify-between">
                         <span>Subtotale</span>
-                        <span>€{{ number_format($total, 2) }}</span>
+                        <span>€{{ number_format($total, 2, ',', '.') }}</span>
                     </div>
+
+                    <!-- Sezione Coupon -->
+                    @if($coupon)
+                    <div class="flex justify-between text-green-600">
+                        <span>Sconto ({{ $coupon->code }})</span>
+                        <span>-€{{ number_format($cartService->getDiscount(), 2, ',', '.') }}</span>
+                    </div>
+                    @endif
+
                     <div class="flex justify-between mt-2">
                         <span>Spedizione</span>
-                        <span>€5.00</span>
+                        <span>€5,00</span>
                     </div>
+
                     <div class="flex justify-between font-bold text-lg mt-4 pt-2 border-t">
                         <span>Totale</span>
-                        <span>€{{ number_format($total + 5, 2) }}</span>
+                        <span>
+                            €{{ number_format($coupon ? ($total + 5 - $cartService->getDiscount()) : ($total + 5), 2, ',', '.') }}
+                        </span>
                     </div>
                 </div>
             </div>

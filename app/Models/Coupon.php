@@ -93,7 +93,7 @@ class Coupon extends Model
     }
 
     /**
-     * Applica lo sconto a un importo
+     * Applica lo sconto
      */
     public function applyDiscount(float $amount): float
     {
@@ -103,7 +103,7 @@ class Coupon extends Model
     }
 
     /**
-     * Genera un codice coupon casuale
+     * Genera un codice coupon univoco
      */
     public static function generateCode(int $length = 8): string
     {

@@ -11,6 +11,7 @@ use App\Http\Controllers\LeadController as LeadController;
 use App\Http\Controllers\CartController as CartController;
 use App\Http\Controllers\OrderController as OrderController;
 use App\Http\Controllers\CheckoutController as CheckoutController;
+use App\Http\Controllers\CouponController as CouponController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -45,6 +46,7 @@ Route::prefix('carrello')->group(function () {
     Route::post('/rimuovi/{product}', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/aggiorna/{product}', [CartController::class, 'update'])->name('cart.update');
     Route::post('/svuota', [CartController::class, 'clear'])->name('cart.clear');
+    Route::get('/totali', [CartController::class, 'getTotals'])->name('cart.totals');
 });
 
 // Checkout
@@ -52,6 +54,10 @@ Route::prefix('checkout')->group(function () {
     Route::get('/', [CheckoutController::class, 'show'])->name('checkout');
     Route::post('/', [CheckoutController::class, 'store'])->name('checkout.store');
 });
+
+// Rotte coupon
+Route::post('/coupon/apply', [CouponController::class, 'apply'])->name('coupon.apply');
+Route::post('/coupon/remove', [CouponController::class, 'remove'])->name('coupon.remove');
 
 // Ordini
 Route::get('/ordine/conferma/{order_code}', [OrderController::class, 'showConfirmation'])

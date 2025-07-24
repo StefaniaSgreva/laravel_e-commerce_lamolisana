@@ -18,7 +18,9 @@ class CheckoutController extends Controller
 
         return view('pages.checkout', [
             'cartItems' => $cartService->getCart(),
-            'total' => $cartService->getTotal()
+            'total' => $cartService->getTotal(),
+            'coupon' => $cartService->getCoupon(),
+            'cartService' => $cartService
         ]);
     }
 
@@ -43,6 +45,9 @@ class CheckoutController extends Controller
             ];
         });
 
+        // Ottieni il coupon prima di svuotare il carrello
+        $coupon = $cartService->getCoupon();
+
         // Crea l'ordine
         $order = Order::createFromCart($cartService, [
             'cliente' => [
@@ -51,12 +56,22 @@ class CheckoutController extends Controller
                 'indirizzo' => $request->input('cliente.indirizzo'),
                 'telefono' => $request->input('cliente.telefono')
             ],
-            'note' => $request->input('note')
+            'note' => $request->input('note'),
+            'coupon_code' => $coupon ? $coupon->code : null, // Aggiungi il codice coupon all'ordine
+            'discount_amount' => $cartService->getDiscount() // Aggiungi l'importo dello sconto
         ]);
 
-        // Svuota il carrello
+        // Svuota il carrello e rimuovi il coupon
         $cartService->clearCart();
+        $cartService->removeCoupon();
 
-        return redirect()->route('pages.order_confirmation', $order->order_code);
+        // Opzionale: registra l'uso del coupon se esiste
+        // if ($coupon) {
+        //     $coupon->increment('uses');
+        //     $coupon->orders()->attach($order->id);
+        // }
+
+        return redirect()->route('pages.order_confirmation', $order->order_code)
+            ->with('success', 'Ordine completato con successo!');
     }
 }

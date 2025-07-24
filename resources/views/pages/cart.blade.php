@@ -105,16 +105,42 @@
                     </div>
 
                     <!-- Coupon Code -->
-                    <div class="mt-6 bg-white rounded-lg shadow-md p-6">
+                    <div class="mt-6 bg-white rounded-lg shadow-md p-6" id="coupon-section">
                         <h3 class="text-lg font-semibold text-molisana-blue mb-3">Hai un codice sconto?</h3>
-                        <div class="flex">
-                            <input type="text"
-                                   placeholder="Inserisci codice"
-                                   class="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-molisana-orange focus:border-transparent">
-                            <button class="bg-molisana-orange hover:bg-molisana-orange-hover text-white px-6 py-2 rounded-r-md transition-colors">
-                                Applica
-                            </button>
+
+                        <div id="coupon-message" class="mb-3 hidden"></div>
+
+                        <div id="coupon-applied" class="@if(!session('coupon')) hidden @endif">
+                            <div class="flex justify-between items-center bg-green-50 p-3 rounded-md mb-3">
+                                <div>
+                                    <span class="font-medium">{{ session('coupon')->code ?? '' }}</span>
+                                    <span class="text-green-600 ml-2" id="coupon-discount">
+                                        @if(session('coupon'))-€{{ number_format($discount, 2, ',', '.') }}@endif
+                                    </span>
+                                </div>
+                                <button id="remove-coupon" class="text-red-500 hover:text-red-700 text-sm">
+                                    Rimuovi
+                                </button>
+                            </div>
                         </div>
+                        <form id="apply-coupon-form" action="{{ route('coupon.apply') }}" method="POST" class="@if(session('coupon')) hidden @endif">
+                            @csrf
+                            <div class="flex">
+                                <input type="text"
+                                    name="code"
+                                    id="coupon-code"
+                                    placeholder="Inserisci codice"
+                                    class="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-molisana-orange focus:border-transparent"
+                                    pattern="[A-Z0-9]+"
+                                    title="Solo lettere maiuscole e numeri"
+                                    value="{{ old('code') }}"
+                                    required>
+                                <button type="submit"
+                                        class="bg-molisana-orange hover:bg-molisana-orange-hover text-white px-6 py-2 rounded-r-md transition-colors">
+                                    Applica
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -126,15 +152,21 @@
                         <div class="space-y-3 mb-6">
                             <div class="flex justify-between">
                                 <span>Subtotale</span>
-                                <span>€ {{ number_format($total, 2, ',', '.') }}</span>
+                                <span class="order-subtotal">€ {{ number_format($subtotal, 2, ',', '.') }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span>Spedizione</span>
-                                <span>€ 5,00</span>
+                                <span class="order-shipping">€ {{ number_format($shipping, 2, ',', '.') }}</span>
                             </div>
+                            @if($discount > 0)
+                            <div class="flex justify-between text-green-600">
+                                <span>Sconto</span>
+                                <span class="order-discount">-€ {{ number_format($discount, 2, ',', '.') }}</span>
+                            </div>
+                            @endif
                             <div class="border-t border-gray-200 pt-3 mt-3 flex justify-between font-bold text-lg text-molisana-blue">
                                 <span>Totale</span>
-                                <span>€ {{ number_format($total + 5, 2, ',', '.') }}</span>
+                                <span class="order-total">€ {{ number_format($total, 2, ',', '.') }}</span>
                             </div>
                         </div>
 
@@ -160,7 +192,6 @@
     </main>
 </div>
 
-
 <script>
     // Funzione per aggiornare la quantità
     function updateQuantity(input, change) {
@@ -183,5 +214,190 @@
             });
         });
     });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Ottieni il token CSRF in modo sicuro
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+
+    // Setup event listeners
+    setupCouponEvents();
+
+    function setupCouponEvents() {
+        // Applica coupon
+        const applyForm = document.getElementById('apply-coupon-form');
+        if (applyForm) {
+            applyForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleCouponApply(e.target);
+            });
+        }
+
+        // Rimuovi coupon
+        const removeBtn = document.getElementById('remove-coupon');
+        if (removeBtn) {
+            removeBtn.addEventListener('click', handleCouponRemove);
+        }
+    }
+
+    async function handleCouponApply(form) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const messageEl = document.getElementById('coupon-message');
+        const couponCode = form.querySelector('input[name="code"]').value;
+
+        // Mostra stato di caricamento
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Applica';
+        messageEl.classList.remove('hidden');
+        messageEl.textContent = 'Elaborazione in corso...';
+        messageEl.className = 'mb-3 p-2 bg-blue-100 text-blue-700 rounded text-sm';
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({
+                    code: couponCode
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Errore nella richiesta');
+            }
+
+            if (data.success) {
+                // Aggiorna UI
+                document.getElementById('coupon-applied').classList.remove('hidden');
+                form.classList.add('hidden');
+
+                // Aggiorna i valori del coupon
+                const couponCodeEl = document.querySelector('#coupon-applied .font-medium');
+                const couponDiscountEl = document.getElementById('coupon-discount');
+
+                if (couponCodeEl) couponCodeEl.textContent = data.coupon.code;
+                if (couponDiscountEl) couponDiscountEl.textContent = `-€${data.discount.toFixed(2).replace('.', ',')}`;
+
+                // Mostra messaggio di successo
+                messageEl.textContent = data.message;
+                messageEl.className = 'mb-3 p-2 bg-green-100 text-green-700 rounded text-sm';
+
+                // Aggiorna i totali
+                updateOrderTotals(data.totals);
+
+                // Ricarica la pagina dopo 1 secondo per assicurarsi che tutto sia aggiornato
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+        } catch (error) {
+            // Mostra messaggio di errore
+            messageEl.textContent = error.message;
+            messageEl.className = 'mb-3 p-2 bg-red-100 text-red-700 rounded text-sm';
+        } finally {
+            // Ripristina il pulsante
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Applica';
+            }
+        }
+    }
+
+    async function handleCouponRemove() {
+        const messageEl = document.getElementById('coupon-message');
+        const removeBtn = document.getElementById('remove-coupon');
+
+        // Mostra stato di caricamento
+        removeBtn.disabled = true;
+        removeBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Rimuovi';
+        messageEl.classList.remove('hidden');
+        messageEl.textContent = 'Rimozione in corso...';
+        messageEl.className = 'mb-3 p-2 bg-blue-100 text-blue-700 rounded text-sm';
+
+        try {
+            const response = await fetch("{{ route('coupon.remove') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Errore nella richiesta');
+            }
+
+            if (data.success) {
+                // Nascondi la sezione coupon applicato
+                document.getElementById('coupon-applied').classList.add('hidden');
+                // Mostra il form di applicazione
+                document.getElementById('apply-coupon-form').classList.remove('hidden');
+
+                // Mostra messaggio di successo
+                messageEl.textContent = data.message;
+                messageEl.className = 'mb-3 p-2 bg-green-100 text-green-700 rounded text-sm';
+
+                // Aggiorna i totali
+                updateOrderTotals(data.totals);
+
+                // Ricarica la pagina dopo 1 secondo
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+        } catch (error) {
+            // Mostra messaggio di errore
+            messageEl.textContent = error.message || 'Errore durante la rimozione del coupon';
+            messageEl.className = 'mb-3 p-2 bg-red-100 text-red-700 rounded text-sm';
+        } finally {
+            // Ripristina il pulsante
+            if (removeBtn) {
+                removeBtn.disabled = false;
+                removeBtn.innerHTML = 'Rimuovi';
+            }
+        }
+    }
+
+    function updateOrderTotals(totals) {
+        // Ensure totals is defined and has all required properties
+        if (!totals) return;
+
+        // Helper function to safely format numbers
+        const formatCurrency = (value) => {
+            if (value === undefined || value === null) return '€ 0,00';
+            return `€ ${value.toFixed(2).replace('.', ',')}`;
+        };
+
+        // Update all values in the order summary
+        const subtotalEl = document.querySelector('.order-subtotal');
+        const shippingEl = document.querySelector('.order-shipping');
+        const discountEl = document.querySelector('.order-discount');
+        const totalEl = document.querySelector('.order-total');
+        const discountContainer = discountEl ? discountEl.parentElement : null;
+
+        if (subtotalEl) subtotalEl.textContent = formatCurrency(totals.subtotal);
+        if (shippingEl) shippingEl.textContent = formatCurrency(totals.shipping);
+
+        if (discountEl && discountContainer) {
+            if (totals.discount > 0) {
+                discountEl.textContent = `-${formatCurrency(totals.discount)}`;
+                discountContainer.style.display = 'flex';
+            } else {
+                discountContainer.style.display = 'none';
+            }
+        }
+
+        if (totalEl) totalEl.textContent = formatCurrency(totals.total);
+    }
+});
 </script>
 @endsection

@@ -50,17 +50,27 @@ class CartService
             ? $product->prezzo_offerta
             : $product->prezzo;
 
-        // Crea o aggiorna l'item nel carrello
-        return CartItem::updateOrCreate(
-            [
-                'product_id' => $product->id,
-                'session_id' => $this->sessionId
-            ],
-            [
-                'quantity' => DB::raw("quantity + $quantity"), // Incrementa la quantità
-                'price' => $price, // Blocca il prezzo corrente
-            ]
-        );
+        // Prima verifica se il prodotto è già nel carrello
+        $existingItem = CartItem::where('product_id', $product->id)
+            ->where('session_id', $this->sessionId)
+            ->first();
+
+        if ($existingItem) {
+            // Se esiste già, aggiorna la quantità sommando la nuova
+            $existingItem->update([
+                'quantity' => $existingItem->quantity + $quantity,
+                'price' => $price
+            ]);
+            return $existingItem;
+        }
+
+        // Se non esiste, crea un nuovo record
+        return CartItem::create([
+            'product_id' => $product->id,
+            'session_id' => $this->sessionId,
+            'quantity' => $quantity,
+            'price' => $price
+        ]);
     }
 
     /**
@@ -125,51 +135,56 @@ class CartService
     // ================= METODI GESTIONE COUPON ================= //
 
     /**
-     * Applica un coupon al carrello
-     * @param string $code Codice coupon
-     * @return bool
-     * @throws \Exception Se il coupon non è valido
+     * Valida un coupon
      */
-    public function applyCoupon($code)
+    public function validateCoupon(string $code): Coupon
     {
         $coupon = Coupon::where('code', $code)
-            ->where('valid_from', '<=', now()) // Non ancora scaduto
-            ->where('valid_to', '>=', now())   // Ancora valido
+            ->where('valid_from', '<=', now())
+            ->where('valid_to', '>=', now())
             ->where(function ($query) {
-                $query->whereNull('max_uses')  // Senza limite usi
-                    ->orWhereRaw('uses < max_uses'); // O con usi disponibili
-            })->first();
+                $query->whereNull('max_uses')
+                    ->orWhereRaw('uses < max_uses');
+            })
+            ->first();
 
-        if ($coupon) {
-            // Verifica l'ordine minimo richiesto
-            if ($coupon->min_order && $this->getSubtotal() < $coupon->min_order) {
-                throw new \Exception("L'ordine minimo per questo coupon è €" . number_format($coupon->min_order, 2));
-            }
-
-            Session::put('coupon', $coupon); // Salva in sessione
-            return true;
+        if (!$coupon) {
+            throw new \Exception('Codice sconto non valido o scaduto');
         }
 
-        throw new \Exception('Codice sconto non valido o scaduto');
+        if ($coupon->min_order && $this->getSubtotal() < $coupon->min_order) {
+            throw new \Exception(sprintf(
+                'L\'ordine minimo per questo coupon è €%s',
+                number_format($coupon->min_order, 2, ',', '.')
+            ));
+        }
+
+        return $coupon;
+    }
+
+    /**
+     * Calcola l'importo dello sconto per un coupon specifico
+     */
+    public function calculateDiscountAmount(Coupon $coupon): float
+    {
+        $subtotal = $this->getSubtotal();
+        return $coupon->type === 'percent'
+            ? ($subtotal * $coupon->value / 100)
+            : min($coupon->value, $subtotal);
     }
 
     /**
      * Calcola l'importo dello sconto applicato
      * @return float
      */
-    public function getDiscount()
+    public function getDiscount(): float
     {
-        if (!$this->hasCoupon()) return 0;
+        if (!$this->hasCoupon()) {
+            return 0;
+        }
 
-        $coupon = Session::get('coupon');
-        $subtotal = $this->getSubtotal();
-
-        // Calcola sconto in base al tipo (percentuale o fisso)
-        $discount = $coupon->type === 'percent'
-            ? ($subtotal * $coupon->value / 100) // Sconto percentuale
-            : min($coupon->value, $subtotal);    // Sconto fisso (non oltre subtotal)
-
-        return round($discount, 2); // Arrotonda a 2 decimali
+        $coupon = $this->getCoupon();
+        return $coupon->applyDiscount($this->getSubtotal());
     }
 
     /**
@@ -185,7 +200,7 @@ class CartService
      * Recupera il coupon applicato
      * @return Coupon|null
      */
-    public function getCoupon()
+    public function getCoupon(): ?Coupon
     {
         return Session::get('coupon');
     }
@@ -193,7 +208,7 @@ class CartService
     /**
      * Rimuove il coupon applicato
      */
-    public function removeCoupon()
+    public function removeCoupon(): void
     {
         Session::forget('coupon');
     }
