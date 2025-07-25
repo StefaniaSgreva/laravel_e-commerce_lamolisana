@@ -63,6 +63,10 @@ Route::post('/coupon/remove', [CouponController::class, 'remove'])->name('coupon
 Route::get('/ordine/conferma/{order_code}', [OrderController::class, 'showConfirmation'])
     ->name('pages.order_confirmation');
 
-// Pagamento
+// PayPAl
+Route::post('/checkout/paypal', [CartController::class, 'paypalCheckout'])->name('checkout.paypal');
+Route::get('/paypal/success', [CartController::class, 'paypalSuccess'])->name('paypal.success');
+Route::get('/paypal/cancel', [CartController::class, 'paypalCancel'])->name('paypal.cancel');
+
 
 // Auth

@@ -12,6 +12,25 @@
         </div>
     </section>
 
+    <!-- PayPal errors -->
+    @if(session('paypal_error'))
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 w-[80%] mx-auto my-6 rounded-md">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-red-800">Errore PayPal</h3>
+                    <div class="mt-2 text-sm text-red-700">
+                        <p>{{ session('paypal_error') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <!-- Cart Content -->
     <main class="container mx-auto px-4 py-4 min-h-[50vh]">
         @if($cartItems->isEmpty())
@@ -170,11 +189,32 @@
                             </div>
                         </div>
 
-                        <a href="{{ route('checkout') }}"
+                        {{-- Checkout senza pagamento per prove sviluppo --}}
+                        {{-- <a href="{{ route('checkout') }}"
                         class="block w-full bg-molisana-orange hover:bg-molisana-orange-hover text-white font-bold py-3 px-4 rounded-md transition-colors mb-4 text-center {{ $cartItems->isEmpty() ? 'opacity-50 cursor-not-allowed' : '' }}"
                         @if($cartItems->isEmpty()) disabled @endif>
                             Procedi al Checkout
-                        </a>
+                        </a> --}}
+
+                        <div class="space-y-4 mb-3">
+                            <!-- Bottone PayPal -->
+                            <form action="{{ route('checkout.paypal') }}" method="POST">
+                                @csrf
+                                <button type="submit"
+                                        class="cursor-pointer w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md transition-colors flex items-center justify-center {{ $cartItems->isEmpty() ? 'opacity-50 cursor-not-allowed' : '' }}"
+                                        @if($cartItems->isEmpty()) disabled @endif>
+                                    <i class="fab fa-paypal mr-2 text-xl"></i> Paga con PayPal
+                                </button>
+                            </form>
+
+                            <!-- Oppure mantieni anche il checkout normale -->
+                            <a href="{{ route('checkout') }}"
+                            class="block w-full bg-molisana-orange hover:bg-molisana-orange-hover text-white font-bold py-3 px-4 rounded-md transition-colors text-center {{ $cartItems->isEmpty() ? 'opacity-50 cursor-not-allowed' : '' }}"
+                            @if($cartItems->isEmpty()) disabled @endif>
+                                Altri metodi di pagamento
+                            </a>
+                        </div>
+
 
                         <div class="text-sm text-gray-500">
                             <p class="mb-2">Spedizione stimata: 2-3 giorni lavorativi</p>
